@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SlideCreateRequestDto {
+public class SlideUsageCreateRequestDto {
     private UUID guestId;
     private String slideId;
-    private String watchId;
+    private Date timestamp;
 }

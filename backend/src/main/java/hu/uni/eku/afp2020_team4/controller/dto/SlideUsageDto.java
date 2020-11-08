@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-public class SlideCreateRequestDto {
+public class SlideUsageDto {
+    private string id;
     private UUID userId;
     private String slideId;
-    private Date usageDate;
+    private Date timestamp;
 }

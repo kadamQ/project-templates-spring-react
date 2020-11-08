@@ -33,9 +33,10 @@ public class SlideUsageController {
     public Collection<SlideUsageDto> fetchAll() {
         return slideUsages.stream().map(slideUsage ->
                 SlideUsageDto.builder()
+                        .id(slideUsage.GetId)
                         .userId(slideUsage.getUserId())
                         .slideId(slideUsage.getSlideId())
-                        .usageDate(slideUsage.getUsageDate())
+                        .timestamp(slideUsage.getTimeStamp())
                         .build()
         ).collect(Collectors.toList());
     }
@@ -47,9 +48,10 @@ public class SlideUsageController {
         for(SlideUsageDto slideUsage: slideUsages) {
             if(slideUsage.getSlideUsageId().equals(id)) {
                 return SlideUsageDto.builder()
+                        .id(slideUsage.GetId)
                         .userId(slideUsage.getUserId())
                         .slideId(slideUsage.getSlideId())
-                        .usageDate(slideUsage.getUsageDate())
+                        .timestamp(slideUsage.getTimeStamp())
                         .build();
             }
         }
@@ -61,9 +63,9 @@ public class SlideUsageController {
     @ApiOperation(value = "Create new slide usage")
     public void create(@RequestBody SlideUsageCreateRequestDto request) {
         SlideUsageDto newSlideUsage = SlideUsageDto.builder()
+                .id(UUID.randomUUID().toString())
                 .userId(request.getUserId())
                 .slideId(request.getSlideId())
-                .usageDate(slideUsage.getUsageDate())
                 .build();
         slideUsages.add(newSlideUsage);
     }
@@ -72,11 +74,12 @@ public class SlideUsageController {
     @ApiOperation(value = "Update a slide usage")
     public void update(@PathVariable String id, @RequestBody SlideUsageCreateRequestDto request) {
         slideUsages = slideUsages.stream().map(
-                slideUsage -> slideUsage.getUsageId().equals(id)
+                slideUsage -> slideUsage.getId().equals(id)
                         ? SlideUsageDto.builder()
-                        .usageId(slideUsage.getUsageId())
+                        .id(id)
+                        .userId(request.getUserId())
                         .slideId(request.getSlideId())
-                        .watchId(request.getPriceId())
+                        .timestamp(request.getTimeStamp())
                         .build()
                         : slideUsage
         ).collect(Collectors.toList());
