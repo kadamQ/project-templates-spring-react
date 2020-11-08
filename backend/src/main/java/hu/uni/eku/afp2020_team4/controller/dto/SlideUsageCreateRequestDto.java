@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SlideCreateRequestDto {
+    private UUID guestId;
     private String slideId;
     private String watchId;
 }

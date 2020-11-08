@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Api(tags = "SlideUsage")
 public class SlideUsageController {
-    // ideiglenes tárolási hely
+
     private Collection<SlideUsageDto> slideUsages = new ArrayList<>();
 
     @GetMapping(value = {"/"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,9 +33,9 @@ public class SlideUsageController {
     public Collection<SlideUsageDto> fetchAll() {
         return slideUsages.stream().map(slideUsage ->
                 SlideUsageDto.builder()
-                        .usageId(slideUsage.getUsageId())
+                        .userId(slideUsage.getUserId())
                         .slideId(slideUsage.getSlideId())
-                        .watcgId(slideUsage.getWatchId())
+                        .usageDate(slideUsage.getUsageDate())
                         .build()
         ).collect(Collectors.toList());
     }
@@ -47,9 +47,9 @@ public class SlideUsageController {
         for(SlideUsageDto slideUsage: slideUsages) {
             if(slideUsage.getSlideUsageId().equals(id)) {
                 return SlideUsageDto.builder()
-                        .usageId(slideUsage.getUsageId())
+                        .userId(slideUsage.getUserId())
                         .slideId(slideUsage.getSlideId())
-                        .watcgId(slideUsage.getWatchId())
+                        .usageDate(slideUsage.getUsageDate())
                         .build();
             }
         }
@@ -61,9 +61,9 @@ public class SlideUsageController {
     @ApiOperation(value = "Create new slide usage")
     public void create(@RequestBody SlideUsageCreateRequestDto request) {
         SlideUsageDto newSlideUsage = SlideUsageDto.builder()
-                .usageId(UUID.randomUUID().toString())
+                .userId(request.getUserId())
                 .slideId(request.getSlideId())
-                .watchId(request.getWatchId())
+                .usageDate(slideUsage.getUsageDate())
                 .build();
         slideUsages.add(newSlideUsage);
     }
