@@ -27,11 +27,22 @@ class SlideList extends React.Component{
     render() {
         return(
             <div>
-                {this.state.slides.map(({slideId},{name},{price}, index)=>{
-                    return(
-                        <SlideListItem key={index} slideId={slideId} name ={name} price={price}/>
-                    );
-                })}
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Csúszda azonosító</th>
+                            <th>Csúszda megnevezése</th>
+                            <th>Ár / csúszás</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {this.state.slides.map(({slideId, name, price}, index)=>{
+                        return(
+                            <SlideListItem key={index} slideId={slideId} name={name} price={price}/>
+                        );
+                    })}
+                    </tbody>
+                </table>
             </div>
         );
     }
