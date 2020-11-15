@@ -2,7 +2,11 @@ import React from 'react';
 
 function SlideListItem({slideId,name,price}){
     return (
-        <span>({slideId},{name},{price})</span>
+        <tr>
+            <td>{slideId}</td>
+            <td>{name}</td>
+            <td>{price}</td>
+        </tr>
     );
 }
 
