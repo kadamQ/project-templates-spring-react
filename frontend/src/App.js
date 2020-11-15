@@ -6,6 +6,7 @@ import WatchRecordingForm from "./component/WatchRecordingForm";
 import WatchList from "./component/WatchList";
 import SlideRecordingForm from "./component/SlideRecordingForm";
 import SlideList from "./component/SlideList";
+import Footer from "./component/footer/index"
 import Navbar from "./component/Navbar";
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
             </div>
             <div className={"col-md-3"}></div>
         </div>
+        <Footer/>
     </div>
+
   );
 }
 
