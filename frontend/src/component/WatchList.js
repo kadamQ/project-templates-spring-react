@@ -27,11 +27,20 @@ class WatchList extends React.Component{
     render() {
         return(
             <div>
+                <table className="table">
+                <thead>
+                    <tr>
+                        <th>Óra azonosító</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {this.state.watches.map(({watchId}, index)=>{
                     return(
                         <WatchListItem key={index} watchId={watchId}/>
                     );
                 })}
+                </tbody>
+                </table>
             </div>
         );
     }
