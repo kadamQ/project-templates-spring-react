@@ -6,10 +6,12 @@ import WatchRecordingForm from "./component/WatchRecordingForm";
 import WatchList from "./component/WatchList";
 import SlideRecordingForm from "./component/SlideRecordingForm";
 import SlideList from "./component/SlideList";
+import Navbar from "./component/Navbar";
 
 function App() {
   return (
     <div className={["App","container"]}>
+        <Navbar/>
         <div className={"row"}>
             <div className={"col-md-3"}></div>
             <div className={"col-md-6"}>
