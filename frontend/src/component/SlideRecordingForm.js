@@ -23,7 +23,7 @@ class SlideRecordingForm extends React.Component{
             <div>
                 <ErrorMessageWell/>
                 <label htmlFor={"slideId"} >Csúszda ID</label>
-                <input type={"number"} id={"slideId"} name={"slideId"} value={this.state.slideId} onChange={this.formOnChange}/>
+                <input type={"text"} id={"slideId"} name={"slideId"} value={this.state.slideId} onChange={this.formOnChange}/>
                 <br/>
                 <label htmlFor={"name"}>Név</label>
                 <input type={"text"} id={"name"} name={"name"} value={this.state.name} onChange={this.formOnChange}/>
