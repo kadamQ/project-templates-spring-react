@@ -58,7 +58,7 @@ public class SlideUsageController {
         }
     }
 
-    @PutMapping(value = {"/{id}"})
+    @PutMapping(value = {"/{usageId}"})
     @ApiOperation(value = "Update a slide usage")
     public void update(@PathVariable Integer usageId, @RequestBody SlideUsageCreateRequestDto request) {
         try {
@@ -69,7 +69,7 @@ public class SlideUsageController {
         }
     }
 
-    @DeleteMapping(value = {"/{id}"})
+    @DeleteMapping(value = {"/{usageId}"})
     @ApiOperation(value = "Delete a slide usage")
     public void delete(@PathVariable Integer usageId) {
         try{
