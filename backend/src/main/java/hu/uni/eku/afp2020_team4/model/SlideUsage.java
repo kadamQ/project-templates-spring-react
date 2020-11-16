@@ -1,20 +1,19 @@
-package hu.uni.eku.afp2020_team4.controller.dto;
+package hu.uni.eku.afp2020_team4.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
 import java.util.Date;
+import java.util.UUID;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SlideUsageCreateRequestDto {
+
+public class SlideUsage {
     private Integer usageId;
-    private UUID guestId;
+    private UUID userId;
     private Integer slideId;
     private Date timestamp;
 }

@@ -2,18 +2,23 @@ package hu.uni.eku.afp2020_team4.controller;
 
 import hu.uni.eku.afp2020_team4.controller.dto.SlideUsageCreateRequestDto;
 import hu.uni.eku.afp2020_team4.controller.dto.SlideUsageDto;
-import hu.uni.eku.afp2020_team4.controller.dto.SlideCreateRequestDto;
-import hu.uni.eku.afp2020_team4.controller.dto.SlideDto;
-import hu.uni.eku.afp2020_team4.controller.dto.WatchDto;
+import hu.uni.eku.afp2020_team4.model.SlideUsage;
+import hu.uni.eku.afp2020_team4.service.SlideUsageService;
+import hu.uni.eku.afp2020_team4.service.exceptions.SlideUsageNotFoundException;
+import hu.uni.eku.afp2020_team4.service.exceptions.SlideUsageAlreadyExistsException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.aspectj.bridge.Message;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
+import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -23,71 +28,55 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/slideUsage")
 @RequiredArgsConstructor
 @Api(tags = "SlideUsage")
+@Slf4j
 public class SlideUsageController {
 
-    private Collection<SlideUsageDto> slideUsages = new ArrayList<>();
+    private final SlideUsageService slideUsageService;
 
     @GetMapping(value = {"/"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ApiOperation(value = "Fetch all slide usages")
     public Collection<SlideUsageDto> fetchAll() {
-        return slideUsages.stream().map(slideUsage ->
+        return slideUsageService.fetchAll().stream().map(slideUsage ->
                 SlideUsageDto.builder()
-                        .id(slideUsage.GetId)
-                        .userId(slideUsage.getUserId())
-                        .slideId(slideUsage.getSlideId())
-                        .timestamp(slideUsage.getTimeStamp())
-                        .build()
+                .usageId(slideUsage.getUsageId())
+                .userId(slideUsage.getUserId())
+                .slideId(slideUsage.getSlideId())
+                .timestamp(slideUsage.getTimestamp())
+                .build()
         ).collect(Collectors.toList());
-    }
-
-    @GetMapping(value = {"/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    @ApiOperation(value = "Fetch slide usage by ID")
-    public SlideUsageDto fetchById(@PathVariable String id) {
-        for(SlideUsageDto slideUsage: slideUsages) {
-            if(slideUsage.getSlideUsageId().equals(id)) {
-                return SlideUsageDto.builder()
-                        .id(slideUsage.GetId)
-                        .userId(slideUsage.getUserId())
-                        .slideId(slideUsage.getSlideId())
-                        .timestamp(slideUsage.getTimeStamp())
-                        .build();
-            }
-        }
-
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No slide usage found by the given ID!");
     }
 
     @PostMapping(value = {"/create"})
     @ApiOperation(value = "Create new slide usage")
     public void create(@RequestBody SlideUsageCreateRequestDto request) {
-        SlideUsageDto newSlideUsage = SlideUsageDto.builder()
-                .id(UUID.randomUUID().toString())
-                .userId(request.getUserId())
-                .slideId(request.getSlideId())
-                .build();
-        slideUsages.add(newSlideUsage);
+        try{
+            slideUsageService.create(new SlideUsage(request.getUsageId(), request.getGuestId(), request.getSlideId(), request.getTimestamp()));
+        }
+        catch (SlideUsageAlreadyExistsException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
     }
 
     @PutMapping(value = {"/{id}"})
     @ApiOperation(value = "Update a slide usage")
-    public void update(@PathVariable String id, @RequestBody SlideUsageCreateRequestDto request) {
-        slideUsages = slideUsages.stream().map(
-                slideUsage -> slideUsage.getId().equals(id)
-                        ? SlideUsageDto.builder()
-                        .id(id)
-                        .userId(request.getUserId())
-                        .slideId(request.getSlideId())
-                        .timestamp(request.getTimeStamp())
-                        .build()
-                        : slideUsage
-        ).collect(Collectors.toList());
+    public void update(@PathVariable Integer usageId, @RequestBody SlideUsageCreateRequestDto request) {
+        try {
+            slideUsageService.update(usageId, new SlideUsage(request.getUsageId(), request.getGuestId(), request.getSlideId(), request.getTimestamp()));
+        }
+        catch(SlideUsageNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
     }
 
     @DeleteMapping(value = {"/{id}"})
     @ApiOperation(value = "Delete a slide usage")
-    public void delete(@PathVariable String id) {
-        slideUsages.removeIf(slideUsage -> slideUsage.getUsageId().equals(id));
+    public void delete(@PathVariable Integer usageId) {
+        try{
+            slideUsageService.delete(usageId);
+        }
+        catch (SlideUsageNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
     }
 }
