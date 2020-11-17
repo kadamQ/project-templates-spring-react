@@ -1,0 +1,18 @@
+element.style {
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+body {
+    min-height: 75rem;
+    padding-top: 4.5rem;
+}
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    background-color: #C8C7C7;
+    text-align: center;
+}
