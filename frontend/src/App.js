@@ -7,7 +7,7 @@ import WatchList from "./component/WatchList";
 import SlideRecordingForm from "./component/SlideRecordingForm";
 import SlideList from "./component/SlideList";
 import Footer from "./component/footer/index"
-import Navbar from "./component/Navbar";
+import Navbar from "./component/navbar/Navbar";
 
 function App() {
   return (
