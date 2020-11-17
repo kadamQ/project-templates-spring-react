@@ -13,16 +13,18 @@ function App() {
   return (
     <div className={["App","container"]}>
         <Navbar/>
-        <div className={"row"}>
-            <div className={"col-md-3"}></div>
-            <div className={"col-md-6"}>
-                <WatchRecordingForm/>
-                <WatchList/>
-                <SlideRecordingForm/>
-                <SlideList/>
+        <main>
+            <div className={"row"}>
+                <div className={"col-md-3"}></div>
+                    <div className={"col-md-6"}>
+                        <WatchRecordingForm/>
+                        <WatchList/>
+                        <SlideRecordingForm/>
+                        <SlideList/>
+                    </div>
+                <div className={"col-md-3"}></div>
             </div>
-            <div className={"col-md-3"}></div>
-        </div>
+        </main>
         <Footer/>
     </div>
 
