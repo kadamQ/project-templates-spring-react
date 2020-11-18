@@ -8,7 +8,7 @@ class Navbar extends React.Component
     {
         return(
             <Nav className="navbar navbar-light bg-light" class="fixed-top">
-                <span className="navbar-brand mb-0 h1">AquaPark<p></p></span>
+                <span className="navbar-brand mb-0 h1 pt-3">AquaPark<p></p></span>
             </Nav>
         )
 

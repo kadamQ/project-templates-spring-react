@@ -4,7 +4,7 @@ import './footer.css';
 function Footer() {
     return (
         <footer className="card-footer fixed-bottom position-static">
-            <p className="text-center">&copy;{new Date().getFullYear()} AFP1 Négyes csapat - All rights reserved.</p>
+            <p className="text-center pt-3">&copy;{new Date().getFullYear()} AFP1 Négyes csapat - All rights reserved.</p>
         </footer>
     )
 }
